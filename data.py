@@ -19,7 +19,11 @@ stats = pd.concat([stats, min])
 stats = pd.concat([stats, max])
 stats = pd.concat([stats, std])
 stats = pd.concat([stats, var])
-print(stats)
+
+# find band that has the worst spread using numpy array
+features_stats = stats.to_numpy()
+worst_spread = features_stats.max(axis=1)[stats.index.get_loc("var")]
+print(stats.loc[:, stats.T['var'] == worst_spread])
 
 
 
