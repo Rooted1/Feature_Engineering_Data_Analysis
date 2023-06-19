@@ -84,3 +84,22 @@ print(feature3_stats)
 
 worst_spread = feature3_stats.max(axis=1)[feature3_stats.index.get_loc("var")]
 print(feature3_stats.loc[:, feature3_stats.T['var'] == worst_spread])
+
+###### SKEW
+
+# compute skew for each band
+features_skew = features.skew(axis=0, skipna=True)
+print(features_skew.to_frame(name="skew").T)
+
+# four largest absolute skew
+four_largest_skews = features_skew.abs().nlargest(4)
+print(four_largest_skews.to_frame(name="skew").T)
+index = four_largest_skews.index
+
+# print the name and skew value for the 4 most skewed bands and the class breakdowns
+class_skews = pd.DataFrame({})
+for dust_class in range(4):
+    class_skews = pd.concat([class_skews, data.loc[data['dust'] == dust_class, index]
+                            .skew(axis=0)
+                            .to_frame(name="dust{:1}".format(dust_class)).T])
+print(class_skews)
