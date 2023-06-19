@@ -119,4 +119,16 @@ for i in range(h):
         print(getBand(i, j), data.loc[:, getBand(i, j)].shape)
         axs[i][j].set_title(getBand(i, j))
         axs[i][j].boxplot(toplot.to_numpy(), vert=False)
+# plt.show()
+
+# for the 4 most skewed bands create a histogram using matplotlib and its subplotting utilities. Use at least 100 bins. Add a title and axis labels
+h, w = (2, 2)
+fig, axs = plt.subplots(h, w, figsize=(20,10), tight_layout=True)
+getBand = lambda x, y: index[x+2*y]
+for i in range(h):
+    for j in range(w):
+        toplot = data.loc[:, getBand(i,j)]
+        print(getBand(i, j), data.loc[:, getBand(i, j)].shape)
+        axs[i][j].set_title(getBand(i, j))
+        axs[i][j].hist(toplot.to_numpy(), bins=100)
 plt.show()
