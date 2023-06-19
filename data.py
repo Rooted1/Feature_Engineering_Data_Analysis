@@ -40,3 +40,16 @@ classes, counts = np.unique(dust_class, return_counts=True)
 for cls, count in zip(classes, counts):
     print("Dust ", int(cls), ": ", count)
 
+
+# compute mean, min, max, std, var for dust class 0
+dust_class0 = features.loc[dust_class == 0]
+feature0_stats = pd.DataFrame({})
+
+for name in ["mean", "min", "max", "std", "var"]:
+    feature0_stats = pd.concat([feature0_stats, getattr(dust_class0, name)(axis=0).to_frame(name=name).T])
+print(feature0_stats)
+
+worst_spread = feature0_stats.max(axis=1)[feature0_stats.index.get_loc("var")]
+print(feature0_stats.loc[:, feature0_stats.T['var'] == worst_spread])
+
+
