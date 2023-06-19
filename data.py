@@ -63,4 +63,13 @@ print(feature1_stats)
 worst_spread = feature1_stats.max(axis=1)[feature1_stats.index.get_loc("var")]
 print(feature1_stats.loc[:, feature1_stats.T['var'] == worst_spread])
 
+# compute mean, min, max, std, var for dust class 2
+dust_class2 = features.loc[dust_class == 2]
+feature2_stats = pd.DataFrame({})
 
+for name in ["mean", "min", "max", "std", "var"]:
+    feature2_stats = pd.concat([feature2_stats, getattr(dust_class2, name)(axis=0).to_frame(name=name).T])
+print(feature2_stats)
+
+worst_spread = feature2_stats.max(axis=1)[feature2_stats.index.get_loc("var")]
+print(feature2_stats.loc[:, feature2_stats.T['var'] == worst_spread])
