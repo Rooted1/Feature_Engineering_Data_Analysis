@@ -32,4 +32,11 @@ worst_spread = features_stats.max(axis=1)[stats.index.get_loc("var")]
 print(stats.loc[:, stats.T['var'] == worst_spread])
 
 
+######## class 'dust' 0, 1, 2, 3
+
+# Print the number of records for each class using numpy.unique
+dust_class = data['dust']
+classes, counts = np.unique(dust_class, return_counts=True)
+for cls, count in zip(classes, counts):
+    print("Dust ", int(cls), ": ", count)
 
